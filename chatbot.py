@@ -29,7 +29,7 @@ for intent in data["intents"]:
 # Cleaning data
 stemmer = LancasterStemmer()
 
-# This will fraction the sentences in lower case
+# This will fraction the sentences in lower case by the root
 words = [stemmer.stem(word.lower()) for word in words]
 
 # We sort the fractions, make them a set to remove duplicates and transform it into a list
@@ -73,5 +73,22 @@ model = tflearn.DNN(neural_network)
 model.fit(train_X, train_y, n_epoch=2000, batch_size=8, show_metric=True)
 
 # Testing the chatbot machine learning model
-
 model.save("chatbot_dnn.tflearn")
+model.load("chatbot_dnn.tflearn")
+
+question = "Do you sell any coding course?"
+
+def process_question(question):
+    question_tokenized = nltk.word_tokenize(question)
+    question_stemmed = [stemmer.stem(word.lower()) for word in question_tokenized]
+    
+    bag = [0] * len(words)
+    
+    for stem in question_stemmed:
+        for index, word in enumerate(words):
+            if word == stem:
+                bag[index] = 1
+                
+    return (numpy.array(bag))
+
+prediction = model.predict([process_question(question)])[0]
