@@ -64,4 +64,10 @@ neural_network = tflearn.input_data(shape= [None, len(train_X[0])])
 
 neural_network = tflearn.fully_connected(neural_network, 8)
 
-print(neural_network)
+neural_network = tflearn.fully_connected(neural_network, len(train_y[0], activation="softmax"))
+
+neural_network = tflearn.regression(neural_network)
+
+model = tflearn.DNN(neural_network)
+
+model.fit(train_X, train_y, n_epoch=2000, batch_size=8, show_metric=True)
