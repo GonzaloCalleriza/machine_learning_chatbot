@@ -1,6 +1,8 @@
 import json
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
+import random
+import numpy
 
 nltk.download('punkt')
 # Connect with database
@@ -46,3 +48,12 @@ for document in documents:
     output_row = list(empty_output)
     output_row[classes.index(document[1])] = 1
     training_data.append([bag_of_words, output_row])
+    
+# Split the data for machine learning
+random.shuffle(training_data)
+
+training_numpy = numpy.array(training_data)
+
+train_X = list(training_numpy[:, 0])
+
+train_y = list(training_numpy[:, 1])
