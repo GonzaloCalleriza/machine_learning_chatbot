@@ -111,3 +111,18 @@ def chatbot(question):
     prediction = model.predict([process_question(question)])
     
     result = categorize(prediction[0])
+    
+# Pick a chatbot response in top category
+def respond_to_input (user_input):
+    question_category = chatbot(user_input)
+    
+    if question_category:
+        while question_category:
+            for intent in data['intents']:
+                if intent['tag'] == question_category[0][0]:
+                    return random.choice(intent["responses"][0])
+                
+while True:
+    user_input = input("Do you have a question for me?\n")
+    response = respond_to_input(user_input)
+    print(response)
