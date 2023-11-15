@@ -71,3 +71,7 @@ neural_network = tflearn.regression(neural_network)
 model = tflearn.DNN(neural_network)
 
 model.fit(train_X, train_y, n_epoch=2000, batch_size=8, show_metric=True)
+
+# Testing the chatbot machine learning model
+
+model.save("chatbot_dnn.tflearn")
