@@ -92,3 +92,22 @@ def process_question(question):
     return (numpy.array(bag))
 
 prediction = model.predict([process_question(question)])[0]
+
+# Categorize chat question with ML
+
+def categorize(prediction):
+    prediction_top = [[index, result] for index, result in enumerate(prediction) if result>0.5]
+
+    prediction_top.sort(key=lambda x: x[1], reverse = True)
+    
+    result = []
+    
+    for prediction_value in prediction_top:
+        result.append((classes[prediction_value[0]], prediction_value[1]))
+        
+    return result
+
+def chatbot(question):
+    prediction = model.predict([process_question(question)])
+    
+    result = categorize(prediction[0])
