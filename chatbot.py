@@ -3,6 +3,7 @@ import nltk
 from nltk.stem.lancaster import LancasterStemmer
 import random
 import numpy
+import tflearn
 
 nltk.download('punkt')
 # Connect with database
@@ -57,3 +58,10 @@ training_numpy = numpy.array(training_data)
 train_X = list(training_numpy[:, 0])
 
 train_y = list(training_numpy[:, 1])
+
+# Build a TensorFlow machine learning model for chat
+neural_network = tflearn.input_data(shape= [None, len(train_X[0])])
+
+neural_network = tflearn.fully_connected(neural_network, 8)
+
+print(neural_network)
